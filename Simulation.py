@@ -82,6 +82,14 @@ height2 = normal(loc=164.4, scale=5.59, size=250)
 df_male = pd.DataFrame({'gender': gender1, 'age': age1, 'bmi': bmi1, 'height': height1})
 df_female = pd.DataFrame({'gender': gender2, 'age': age2, 'bmi': bmi2, 'height': height2})
 
+#
+elements=["primary", "high school", "bachelor", "master", "phD"]
+
+education_level=[]
+for i in range(500):
+
+    sample_education=random.sample(elements, k=1)
+    education_level.append(sample_education[0])
 
 
 # education level (primary, high school, bachelor, master, phD)
