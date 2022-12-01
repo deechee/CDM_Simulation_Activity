@@ -101,6 +101,11 @@ print(education_level)
 
 # 5 SNP values (0,1,2)
 
+SNP = np.random.randint(3, size=500)
+
+SNP = pd.DataFrame(SNP, columns=["SNP"])
+print(SNP)
+
 # case_control status defined as a function of some of your other variables
 # logit_p = b0 + b1*var1
 # p = 1/(1+exp(-(logit_p)))
