@@ -52,11 +52,9 @@ name = gender.apply(lambda x: gen_name(gender[x]))
 gender["name"] = name
 
 # sample_id (any reference of your choice) if in 8-digit barcode
-sample_ID = []
-for i in range(500):
-    sample_ID.append('000' + fake.ean(length=8))
-
-gender["sid"] = sample_ID
+sample_ID = np.random.randint(500, size=500)
+sample_ID = pd.DataFrame(sample_ID, columns=["sample_ID"])
+print(sample_ID)
 
 # age
 age1 = np.random.choice(70,250)
