@@ -31,9 +31,6 @@ def sample_country_city(country_city, countries, n=500):
                 x=1
 
             
-        
-        
-
 
 sample_country_city(country_city, countries)
 
@@ -61,6 +58,7 @@ for i in range(500):
 
 gender["sid"] = sample_ID
 
+
 # age
 age1 = np.random.choice(70,250)
 age2 = np.random.choice(70,250)
@@ -85,9 +83,6 @@ height2 = normal(loc=164.4, scale=5.59, size=250)
 df_male = pd.DataFrame({'gender': gender1, 'age': age1, 'bmi': bmi1, 'height': height1})
 df_female = pd.DataFrame({'gender': gender2, 'age': age2, 'bmi': bmi2, 'height': height2})
 
-# country
-
-# city
 
 # education level (primary, high school, bachelor, master, phD)
 
@@ -96,7 +91,9 @@ df_female = pd.DataFrame({'gender': gender2, 'age': age2, 'bmi': bmi2, 'height':
 # 5 SNP values (0,1,2)
 
 # case_control status defined as a function of some of your other variables
+# logit_p = b0 + b1*var1
+# p = 1/(1+exp(-(logit_p)))
+# y ~ binomial(1, p)
 
-
-#all_data = [age], [sample_id]
-#all_data_df = pd.DataFrame(all_data, columns=['name', 'sample_id'])
+#all_data = [sample_ID], [name], [gender]
+#all_data_df = pd.DataFrame(all_data, columns=['sample_id', 'name', 'gender'])
