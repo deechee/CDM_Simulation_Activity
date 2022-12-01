@@ -147,6 +147,7 @@ mydata = pd.concat([mydata, df_SNP], axis=1)
 logit_p = 0.2*mydata["SNP1"] + 0.3*mydata["SNP2"] + 1.2*mydata["SNP5"]
 p = 1/(1 + np.exp(-1*logit_p))
 status = np.random.binomial(1, p, size = 500)
+
 mydata["status"] = status
 
 ########## final dataset ###########
