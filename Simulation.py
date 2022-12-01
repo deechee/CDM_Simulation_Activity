@@ -32,7 +32,7 @@ def sample_country_city(country_city, countries, n=500):
                 cc_list.append(data)
                 x=1
     return cc_list
-country_city_list = sample_country_city(country_city, countries) # 
+country_city_list = sample_country_city(country_city, countries) 
 
 # gender
 gender = np.random.randint(2, size=500)
@@ -88,15 +88,13 @@ gender["height"] = height
 elements=["primary", "high school", "bachelor", "master", "phD"]
 
 education_level=[]
-for i in range(500):
 
+for i in range(500):
     sample_education=random.sample(elements, k=1)
     education_level.append(sample_education[0])
 
 education_level = pd.DataFrame(education_level, columns=["education_level"])
-print(education_level)
-
-
+gender["education_level"] = education_level
 
 # 10 gene_expression values ranging from
 
