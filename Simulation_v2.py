@@ -1,5 +1,4 @@
-#####
-# Import packages
+########## Import packages #############
 from faker import Faker
 import random
 import numpy as np
@@ -13,8 +12,12 @@ fake = Faker()
 random.seed(0) # not sure if this is how to do it
 
 ########## sample_id (any reference of your choice) if in 8-digit barcode ##########
-sample_ID = np.random.randint(500, size=500)
-mydata = pd.DataFrame(sample_ID, columns=["sample_ID"])
+sample_ID = np.random.randint(10000, 99999, size=500)
+sample_ID = sample_ID.tolist()
+for i in range(500):
+    sample_ID[i] = '000' + str(sample_ID[i])
+
+mydata = pd.DataFrame(sample_ID, columns=["sid"])
 
 
 ############ country & city ###########
@@ -36,6 +39,7 @@ def sample_country_city(country_city, countries, n=500):
                 x=1
     return cc_list
 country_city_list = sample_country_city(country_city, countries) 
+
 cc_arr = np.array(country_city_list)
 cc_df = pd.DataFrame(a, columns = ["City", "Country"])
 
@@ -94,8 +98,22 @@ for i in range(500):
 mydata["education"] = education_level
 
 ############ 10 gene_expression values ranging from ###########
+a = [
+    {"gene1": np.random.uniform(-3 ,3),
+     "gene2": np.random.uniform(-3 ,3),
+     "gene3": np.random.uniform(-3 ,3),
+     "gene4": np.random.uniform(-3 ,3),
+     "gene5": np.random.uniform(-3 ,3),
+     "gene6": np.random.uniform(-3 ,3),
+     "gene7": np.random.uniform(-3 ,3),
+     "gene8": np.random.uniform(-3 ,3),
+     "gene9": np.random.uniform(-3 ,3),
+     "gene10": np.random.uniform(-3 ,3)}
+    for x in range(500)]
 
+df = pd.DataFrame(a)
 
+mydata = pd.concat([mydata, df], axis=1)
 
 ######## 5 SNP values (0,1,2) ##########
 # rs2231142: MAF=0.10
@@ -126,8 +144,13 @@ mydata = pd.concat([mydata, df_SNP], axis=1)
 # logit_p = b0 + b1*var1
 # p = 1/(1+exp(-(logit_p)))
 # y ~ binomial(1, p)
-
+logit_p = 0.2*mydata["SNP1"] + 0.3*mydata["SNP2"] + 1.2*mydata["SNP5"]
+p = 1/(1 + np.exp(-1*logit_p))
+status = np.random.binomial(1, p, size = 500)
+mydata["status"] = status
 
 ########## final dataset ###########
 mydata.head()
 
+############# write to csv file #############
+mydata.to_csv('mydata.csv')
