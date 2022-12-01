@@ -26,9 +26,6 @@ age = np.random.choice(70,500)
 
 age = pd.DataFrame(age, columns=["age"])
 
-
-age = np.random.choice(Age, size=500) 
-
 # gender
 gender = np.random.randint(2, size=500)
 gender = np.where(gender == 1, "Male", "Female")
