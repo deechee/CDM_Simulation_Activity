@@ -85,9 +85,27 @@ height2 = normal(loc=164.4, scale=5.59, size=250)
 df_male = pd.DataFrame({'gender': gender1, 'age': age1, 'bmi': bmi1, 'height': height1})
 df_female = pd.DataFrame({'gender': gender2, 'age': age2, 'bmi': bmi2, 'height': height2})
 
-# country
+# country & city
 
-# city
+country_city_raw = pd.read_csv('worldcities.csv')
+country_city = country_city_raw[['city_ascii', 'country']]
+
+countries = ['Japan', 'France']
+
+
+def sample_country_city(country_city, countries, n=500):
+    cc_list=[]
+    for i in range(n):
+        x = 0
+        while x == 0:
+            data = pd.DataFrame.sample(country_city).values[0]
+            country = data[1]
+
+            if country in countries:
+                cc_list.append(data)
+                x=1
+    return cc_list
+country_city_list = sample_country_city(country_city, countries) # 
 
 # education level (primary, high school, bachelor, master, phD)
 
