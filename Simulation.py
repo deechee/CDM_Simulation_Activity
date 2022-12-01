@@ -20,6 +20,10 @@ print(name)
 # sample_id (any reference of your choice)
 
 # age
+age = np.random.choice(70,500)
+
+age = pd.DataFrame(age, columns=["age"])
+
 
 # gender
 gender = np.random.randint(2, size=500)
