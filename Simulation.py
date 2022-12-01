@@ -1,5 +1,16 @@
 #####
+# Import packages
+from faker import Faker
+
+# create object for making fake data
+fake = Faker()
+
 # name (First and Last)
+name = []
+for i in range(500):
+  name.append(fake.name())
+print(name)
+
 # sample_id (any reference of your choice)
 # age
 # gender
