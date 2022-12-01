@@ -11,6 +11,14 @@ fake = Faker()
 # set seed
 random.seed(0) # not sure if this is how to do it
 
+#country
+
+# gender
+gender = np.random.randint(2, size=500)
+gender = np.where(gender == 1, "Male", "Female")
+
+gender = pd.DataFrame(gender, columns=["gender"])
+
 # name (First and Last)
 def gen_name(x):
     if x == "Female":
@@ -29,13 +37,6 @@ sample_ID = fake.ean(length=8)
 age = np.random.choice(70,500)
 
 age = pd.DataFrame(age, columns=["age"])
-
-# gender
-gender = np.random.randint(2, size=500)
-gender = np.where(gender == 1, "Male", "Female")
-
-gender = pd.DataFrame(gender, columns=["gender"])
-
 
 # bmi
 
