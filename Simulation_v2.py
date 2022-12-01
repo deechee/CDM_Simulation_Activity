@@ -19,7 +19,6 @@ for i in range(500):
 
 mydata = pd.DataFrame(sample_ID, columns=["sid"])
 
-
 ############ country & city ###########
 country_city_raw = pd.read_csv('worldcities.csv')
 country_city = country_city_raw[['city_ascii', 'country']]
@@ -59,8 +58,8 @@ def gen_name(x):
         return fake.name_male()
 
 name = mydata["gender"].apply(gen_name)
-mydata["name"] = name
 
+mydata["name"] = name
 
 ######### age ############
 age = np.random.choice(range(18,80),500)
@@ -74,6 +73,7 @@ def gen_bmi(x):
         return normal(loc=26.5, scale=6, size=1)
 
 bmi = mydata["gender"].apply(gen_bmi)
+
 mydata["bmi"] = bmi
 
 ########## height ###########
@@ -84,6 +84,7 @@ def gen_height(x):
         return normal(loc=178.2, scale=6.35, size=1)
 
 height = mydata["gender"].apply(gen_height)
+
 mydata["height"] = height
 
 ########## education level (primary, high school, bachelor, master, phD) ###########
@@ -138,7 +139,6 @@ df_SNP = pd.DataFrame(list(SNPs)).T
 df_SNP.columns = ["SNP1", "SNP2", "SNP3", "SNP4", "SNP5"]
 
 mydata = pd.concat([mydata, df_SNP], axis=1)
-
 
 ############### case_control status defined as a function of some of your other variables ##############
 # logit_p = b0 + b1*var1
