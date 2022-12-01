@@ -24,7 +24,9 @@ print(name)
 # gender
 gender = np.random.randint(2, size=500)
 gender = np.where(gender == 1, "Male", "Female")
-gender
+
+gender = pd.DataFrame(gender, columns=["gender"])
+
 
 # bmi
 
