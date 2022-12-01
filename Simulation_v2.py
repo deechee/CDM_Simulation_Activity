@@ -17,30 +17,30 @@ sample_ID = sample_ID.tolist()
 for i in range(500):
     sample_ID[i] = '000' + str(sample_ID[i])
 
-mydata = pd.DataFrame(sample_ID, columns=["sid"])
+mydata = pd.DataFrame(sample_ID, columns=['sid'])
 
 ############ country & city ###########
 country_city_raw = pd.read_csv('worldcities.csv')
 country_city = country_city_raw[['city_ascii', 'country']]
 
-countries = ['Japan', 'France']
+countries = ['Japan', 'France', 'United Kingdom', 'United States', 'Australia']
 
-def sample_country_city(country_city, countries, n=500):
+def sample_country_city(cc_data, countries, n=500):
     cc_list=[]
     for i in range(n):
         x = 0
         while x == 0:
-            data = pd.DataFrame.sample(country_city).values[0]
+            data = pd.DataFrame.sample(cc_data).values[0]
             country = data[1]
-
             if country in countries:
                 cc_list.append(data)
                 x=1
     return cc_list
+
 country_city_list = sample_country_city(country_city, countries) 
 
 cc_arr = np.array(country_city_list)
-cc_df = pd.DataFrame(a, columns = ["City", "Country"])
+cc_df = pd.DataFrame(cc_arr, columns = ["City", "Country"])
 
 mydata = pd.concat([mydata, cc_df], axis=1)
 
