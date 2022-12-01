@@ -12,6 +12,11 @@ fake = Faker()
 # set seed
 random.seed(0) # not sure if this is how to do it
 
+# sample_id (any reference of your choice) if in 8-digit barcode
+sample_ID = np.random.randint(500, size=500)
+mydata = pd.DataFrame(sample_ID, columns=["sample_ID"])
+
+
 # country & city
 
 country_city_raw = pd.read_csv('worldcities.csv')
@@ -39,7 +44,7 @@ country_city_list = sample_country_city(country_city, countries)
 gender = np.random.randint(2, size=500)
 gender = np.where(gender == 1, "Male", "Female")
 
-gender = pd.DataFrame(gender, columns=["gender"])
+mydata["gender"] = gender
 
 # name (First and Last)
 def gen_name(x):
@@ -48,20 +53,13 @@ def gen_name(x):
     else: 
         return fake.name_male()
 
-name = gender["gender"].apply(gen_name)
+name = mydata["gender"].apply(gen_name)
+mydata["name"] = name
 
-gender["name"] = name
-
-# sample_id (any reference of your choice) if in 8-digit barcode
-sample_ID = np.random.randint(500, size=500)
-sample_ID = pd.DataFrame(sample_ID, columns=["sample_ID"])
-
-gender["sample_ID"] = sample_ID
 
 # age
 age = np.random.choice(range(18,80),500)
-
-gender["age"] = age
+mydata["age"] = age
 
 #bmi
 def gen_bmi(x):
@@ -70,9 +68,8 @@ def gen_bmi(x):
     else: 
         return normal(loc=26.5, scale=6, size=1)
 
-bmi = gender["gender"].apply(gen_bmi)
-gender["bmi"] = bmi
-
+bmi = mydata["gender"].apply(gen_bmi)
+mydata["bmi"] = bmi
 
 # height
 def gen_height(x):
@@ -81,9 +78,8 @@ def gen_height(x):
     else: 
         return normal(loc=178.2, scale=6.35, size=1)
 
-height = gender["gender"].apply(gen_height)
-
-gender["height"] = height
+height = mydata["gender"].apply(gen_height)
+mydata["height"] = height
 
 # education level (primary, high school, bachelor, master, phD)
 elements=["primary", "high school", "bachelor", "master", "phD"]
@@ -94,8 +90,7 @@ for i in range(500):
     sample_education=random.sample(elements, k=1)
     education_level.append(sample_education[0])
 
-education_level = pd.DataFrame(education_level, columns=["education_level"])
-gender["education_level"] = education_level
+mydata["education"] = education_level
 
 # 10 gene_expression values ranging from
 
@@ -116,17 +111,18 @@ def gen_SNP(x):
     return random.choices([0,1,2], calc_hwe(x), k=500)
 
 MAFs = pd.DataFrame([0.1, 0.3, 0.31, 0.27, 0.26], columns = ["MAF"])
-test = MAFs["MAF"].apply(gen_SNP)
+SNPs = MAFs["MAF"].apply(gen_SNP)
 
-df_t = pd.DataFrame(list(test)).T
-df_t.columns = ["SNP1", "SNP2", "SNP3", "SNP4", "SNP5"]
+df_SNP = pd.DataFrame(list(SNPs)).T
+df_SNP.columns = ["SNP1", "SNP2", "SNP3", "SNP4", "SNP5"]
 
-df_t.head()
+mydata = pd.concat([mydata, df_SNP], axis=1)
+
 
 # case_control status defined as a function of some of your other variables
 # logit_p = b0 + b1*var1
 # p = 1/(1+exp(-(logit_p)))
 # y ~ binomial(1, p)
 
-#all_data = [sample_ID], [name], [gender]
-#all_data_df = pd.DataFrame(all_data, columns=['sample_id', 'name', 'gender'])
+mydata.head()
+
