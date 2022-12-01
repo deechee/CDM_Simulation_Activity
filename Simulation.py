@@ -11,7 +11,30 @@ fake = Faker()
 # set seed
 random.seed(0) # not sure if this is how to do it
 
-#country
+# country & city
+country_city_raw = pd.read_csv('worldcities.csv')
+country_city = country_city_raw[['city_ascii', 'country']]
+
+countries = ['Japan', 'France']
+
+cc_list=[]
+def sample_country_city(country_city, countries, n=500):
+    for i in range(n):
+        x = 0
+        while x == 0:
+            data = pd.DataFrame.sample(country_city).values[0]
+            country = data[1]
+
+            if country in countries:
+                cc_list.append(data)
+                x=1
+
+            
+        
+        
+
+
+sample_country_city(country_city, countries)
 
 # gender
 gender = np.random.randint(2, size=500)
