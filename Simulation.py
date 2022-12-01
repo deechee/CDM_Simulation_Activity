@@ -52,11 +52,9 @@ name = gender["gender"].apply(gen_name)
 gender["name"] = name
 
 # sample_id (any reference of your choice) if in 8-digit barcode
-sample_ID = []
-for i in range(500):
-    sample_ID.append('000' + fake.ean(length=8))
-
-gender["sid"] = sample_ID
+sample_ID = np.random.randint(500, size=500)
+sample_ID = pd.DataFrame(sample_ID, columns=["sample_ID"])
+print(sample_ID)
 
 
 # age
@@ -85,6 +83,14 @@ height2 = normal(loc=164.4, scale=5.59, size=250)
 df_male = pd.DataFrame({'gender': gender1, 'age': age1, 'bmi': bmi1, 'height': height1})
 df_female = pd.DataFrame({'gender': gender2, 'age': age2, 'bmi': bmi2, 'height': height2})
 
+#
+elements=["primary", "high school", "bachelor", "master", "phD"]
+
+education_level=[]
+for i in range(500):
+
+    sample_education=random.sample(elements, k=1)
+    education_level.append(sample_education[0])
 
 
 # education level (primary, high school, bachelor, master, phD)
