@@ -27,11 +27,15 @@ def gen_name(x):
         return fake.name_male()
 
 name = gender.apply(lambda x: gen_name(gender[x]))
+
 gender["name"] = name
 
 # sample_id (any reference of your choice) if in 8-digit barcode
+sample_ID = []
+for i in range(500):
+    sample_ID.append('000' + fake.ean(length=8))
 
-sample_ID = fake.ean(length=8)
+gender["sid"] = sample_ID
 
 # age
 age = np.random.choice(70,500)
