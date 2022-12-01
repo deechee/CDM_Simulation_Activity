@@ -34,6 +34,7 @@ def sample_country_city(country_city, countries, n=500):
     return cc_list
 country_city_list = sample_country_city(country_city, countries) # 
 
+
 # gender
 gender = np.random.randint(2, size=500)
 gender = np.where(gender == 1, "Male", "Female")
@@ -58,8 +59,6 @@ print(sample_ID)
 
 
 # age
-
-
 age1 = np.random.choice(70,250)
 age2 = np.random.choice(70,250)
 
@@ -97,7 +96,27 @@ for i in range(500):
 
 # 10 gene_expression values ranging from
 
-# 5 SNP values (0,1,2)
+######## 5 SNP values (0,1,2) ##########
+# rs2231142: MAF=0.10
+# rs16890979: MAF=0.30
+# rs2910164: MAF=0.31
+# rs6922269: MAF=0.27
+# rs17228212: MAF=0.26
+def calc_hwe(maf):
+    p_0 = round((1-maf)*(1-maf), 2)
+    p_1 = round(maf*(1-maf), 2)
+    p_2 = round(maf*maf, 2)
+    p = [p_0, p_1, p_2]
+    return p
+
+def gen_SNP(x):
+    return random.choices([0,1,2], calc_hwe(x), k=500)
+
+MAFs = [0.1, 0.3, 0.31, 0.27, 0.26]
+MAFs.apply(gen_SNP)
+
+SNP_1 = random.choices([0,1,2], calc_hwe(0.1), k=500)
+
 
 # case_control status defined as a function of some of your other variables
 # logit_p = b0 + b1*var1
