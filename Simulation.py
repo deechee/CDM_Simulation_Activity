@@ -27,11 +27,6 @@ def gen_name(x):
 
 name = gender.apply(lambda x: gen_name(gender[x]))
 
-#name = []
-#for i in range(500):
-#  name.append(fake.name())
-#print(name)
-
 # sample_id (any reference of your choice) if in 8-digit barcode
 
 sample_ID = fake.ean(length=8)
@@ -41,13 +36,6 @@ sample_ID = fake.ean(length=8)
 age = np.random.choice(70,500)
 
 age = pd.DataFrame(age, columns=["age"])
-
-# gender
-gender = np.random.randint(2, size=500)
-gender = np.where(gender == 1, "Male", "Female")
-
-gender = pd.DataFrame(gender, columns=["gender"])
-
 
 # bmi
 
