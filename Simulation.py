@@ -12,34 +12,19 @@ fake = Faker()
 # set seed
 random.seed(0) # not sure if this is how to do it
 
+df=pd.DataFrame()
+
 # country & city
+country_city = pd.read_csv('worldcities.csv', usecols=['city', 'country']).sample(500)
 
-country_city_raw = pd.read_csv('worldcities.csv')
-country_city = country_city_raw[['city_ascii', 'country']]
-
-countries = ['Japan', 'France']
-
-
-def sample_country_city(country_city, countries, n=500):
-    cc_list=[]
-    for i in range(n):
-        x = 0
-        while x == 0:
-            data = pd.DataFrame.sample(country_city).values[0]
-            country = data[1]
-
-            if country in countries:
-                cc_list.append(data)
-                x=1
-    return cc_list
-country_city_list = sample_country_city(country_city, countries) 
-
+df["city"] = country_city["city"]
+df["country"] = country_city["country"]
 
 # gender
 gender = np.random.randint(2, size=500)
 gender = np.where(gender == 1, "Male", "Female")
 
-gender = pd.DataFrame(gender, columns=["gender"])
+df["gender"] = gender
 
 # name (First and Last)
 def gen_name(x):
@@ -48,42 +33,37 @@ def gen_name(x):
     else: 
         return fake.name_male()
 
-name = gender["gender"].apply(gen_name)
-
-gender["name"] = name
+name = df["gender"].apply(gen_name)
+df["name"] = name
 
 # sample_id (any reference of your choice) if in 8-digit barcode
 sample_ID = np.random.randint(500, size=500)
-sample_ID = pd.DataFrame(sample_ID, columns=["sample_ID"])
 
-gender["sample_ID"] = sample_ID
+df["sample_ID"] = sample_ID
 
 # age
 age = np.random.choice(range(18,80),500)
 
-gender["age"] = age
+df["age"] = age
 
 #bmi
 def gen_bmi(x):
     if x == "Female":
-        return normal(loc=22.5, scale=5, size=1)
+        return normal(loc=22.5, scale=5, size=1)[0]
     else: 
-        return normal(loc=26.5, scale=6, size=1)
+        return normal(loc=26.5, scale=6, size=1)[0]
 
-bmi = gender["gender"].apply(gen_bmi)
-gender["bmi"] = bmi
+df["bmi"] = df["gender"].apply(gen_bmi)
 
 
 # height
 def gen_height(x):
     if x == "Female":
-        return normal(loc=164.4, scale=5.59, size=1)
+        return normal(loc=164.4, scale=5.59, size=1)[0]
     else: 
-        return normal(loc=178.2, scale=6.35, size=1)
+        return normal(loc=178.2, scale=6.35, size=1)[0]
 
-height = gender["gender"].apply(gen_height)
-
-gender["height"] = height
+df["height"] = df["gender"].apply(gen_height)
 
 # education level (primary, high school, bachelor, master, phD)
 elements=["primary", "high school", "bachelor", "master", "phD"]
@@ -93,9 +73,8 @@ education_level=[]
 for i in range(500):
     sample_education=random.sample(elements, k=1)
     education_level.append(sample_education[0])
-
-education_level = pd.DataFrame(education_level, columns=["education_level"])
-gender["education_level"] = education_level
+ 
+df["education_level"] = education_level
 
 # 10 gene_expression values ranging from
 
