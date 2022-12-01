@@ -47,7 +47,7 @@ def gen_name(x):
     else: 
         return fake.name_male()
 
-name = gender.apply(lambda x: gen_name(gender[x]))
+name = gender["gender"].apply(gen_name)
 
 gender["name"] = name
 
@@ -60,6 +60,8 @@ gender["sid"] = sample_ID
 
 
 # age
+
+
 age1 = np.random.choice(70,250)
 age2 = np.random.choice(70,250)
 
