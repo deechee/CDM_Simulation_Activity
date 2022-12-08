@@ -20,10 +20,30 @@ for i in range(500):
 mydata = pd.DataFrame(sample_ID, columns=['sid'])
 
 ############# education level #############
+els = ['Primary', 'Secondary', 'Bachelor', 'Masters', 'PhD']
+el = np.random.choice(els, 500, p = [0.1, 0.3, 0.3, 0.2, 0.1])
+# add to dataset
+mydata = pd.DataFrame(el, columns=['education_level'])
 
+############ 10 gene_expression values ranging from ###########
+a = [
+    {"gene1": np.random.uniform(-3 ,3),
+     "gene2": np.random.uniform(-3 ,3),
+     "gene3": np.random.uniform(-3 ,3),
+     "gene4": np.random.uniform(-3 ,3),
+     "gene5": np.random.uniform(-3 ,3),
+     "gene6": np.random.uniform(-3 ,3),
+     "gene7": np.random.uniform(-3 ,3),
+     "gene8": np.random.uniform(-3 ,3),
+     "gene9": np.random.uniform(-3 ,3),
+     "gene10": np.random.uniform(-3 ,3)}
+    for x in range(500)]
 
+df = pd.DataFrame(a)
 
-############ country & city ###########
+mydata = pd.concat([mydata, df], axis=1)
+
+############ country & city ##########
 country_city = pd.read_csv('country_city.csv')
 
 def sample_country_city(country_city, n=500):
@@ -83,34 +103,8 @@ height = mydata["gender"].apply(gen_height)
 
 mydata["height"] = height
 
-########## education level (primary, high school, bachelor, master, phD) ###########
-elements=["primary", "high school", "bachelor", "master", "phD"]
 
-education_level=[]
 
-for i in range(500):
-    sample_education=random.sample(elements, k=1)
-    education_level.append(sample_education[0])
-
-mydata["education"] = education_level
-
-############ 10 gene_expression values ranging from ###########
-a = [
-    {"gene1": np.random.uniform(-3 ,3),
-     "gene2": np.random.uniform(-3 ,3),
-     "gene3": np.random.uniform(-3 ,3),
-     "gene4": np.random.uniform(-3 ,3),
-     "gene5": np.random.uniform(-3 ,3),
-     "gene6": np.random.uniform(-3 ,3),
-     "gene7": np.random.uniform(-3 ,3),
-     "gene8": np.random.uniform(-3 ,3),
-     "gene9": np.random.uniform(-3 ,3),
-     "gene10": np.random.uniform(-3 ,3)}
-    for x in range(500)]
-
-df = pd.DataFrame(a)
-
-mydata = pd.concat([mydata, df], axis=1)
 
 ######## 5 SNP values (0,1,2) ##########
 # rs2231142: MAF=0.10
@@ -140,7 +134,7 @@ mydata = pd.concat([mydata, df_SNP], axis=1)
 # logit_p = b0 + b1*var1
 # p = 1/(1+exp(-(logit_p)))
 # y ~ binomial(1, p)
-logit_p = 0.2*mydata["SNP1"] + 0.3*mydata["SNP2"] + 1.2*mydata["SNP5"]
+logit_p = 0.2*mydata["bmi"] + 0.3*mydata["SNP2"] + 1.2*mydata["SNP5"]
 p = 1/(1 + np.exp(-1*logit_p))
 status = np.random.binomial(1, p, size = 500)
 
