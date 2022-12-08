@@ -19,28 +19,24 @@ for i in range(500):
 
 mydata = pd.DataFrame(sample_ID, columns=['sid'])
 
+############# education level #############
+
+
+
 ############ country & city ###########
-country_city_raw = pd.read_csv('worldcities.csv')
-country_city = country_city_raw[['city_ascii', 'country']]
+country_city = pd.read_csv('country_city.csv')
 
-countries = ['Japan', 'France', 'United Kingdom', 'United States', 'Australia']
-
-def sample_country_city(cc_data, countries, n=500):
+def sample_country_city(country_city, n=500):
     cc_list=[]
     for i in range(n):
-        x = 0
-        while x == 0:
-            data = pd.DataFrame.sample(cc_data).values[0]
-            country = data[1]
-            if country in countries:
-                cc_list.append(data)
-                x=1
+        data = pd.DataFrame.sample(country_city).values[0]
+        cc_list.append(data)
     return cc_list
 
-country_city_list = sample_country_city(country_city, countries) 
+country_city_list = sample_country_city(country_city)
 
 cc_arr = np.array(country_city_list)
-cc_df = pd.DataFrame(cc_arr, columns = ["City", "Country"])
+cc_df = pd.DataFrame(cc_arr, columns = ["city", "country"])
 
 mydata = pd.concat([mydata, cc_df], axis=1)
 
